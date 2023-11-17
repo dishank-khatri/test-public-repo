@@ -103,7 +103,6 @@ looker.plugins.visualizations.add({
     //   labels.push(row[xField].value);
     // });
 
-
     // Initialize a Chart.js instance
       var ctx = this.chart_container;
       if (this.chart) {
@@ -125,7 +124,7 @@ looker.plugins.visualizations.add({
         },
       });
 
-    this.chart.canvas.style.height = '50px';
+    this.chart.canvas.style.height = '250px';
     this.chart.canvas.style.width = '200px';
     // Update the chart
     this.chart.update();
