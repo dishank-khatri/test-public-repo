@@ -15,15 +15,6 @@ looker.plugins.visualizations.add({
     this.container.style.flexDirection = "column";
     this.container.style.alignItems = "center";
 
-    // Create a container for the text line
-    // this.textContainer = element.appendChild(document.createElement("div"));
-    // this.textContainer.setAttribute("id", "text-line-container");
-    // this.textContainer.style.fontSize = "16px";
-    // this.textContainer.style.textAlign = "center";
-    // this.textContainer.style.padding = "5px";
-    // this.textContainer.style.fontFamily = "Arial";
-
-
    // Create a container element for your chart
     this.parentNode = document.createElement("div");
     this.parentNode.style.display = "flex";
@@ -37,71 +28,17 @@ looker.plugins.visualizations.add({
   },
 
   updateAsync: function(data, element, config, queryResponse, details, done) {
-    // var threatcolumn = queryResponse.fields.measure_like[0].name
-    // // Calculate the count value from the data
-    // const count = data.length;
-    // let list=[]
-    // let list1=[]
-    // for (var i of queryResponse.fields.measures) {
-    //   var th = document.createElement('th');
-    //   list.push(i.name);
-    // }
-    // data.forEach(function (row) {
-    //   Object.keys(row).forEach(function (key) {
-    //     list1.push(row[key].value);
-    //   });
-    // });
-    // Calculate the percentage value based on the available count
-    // const estimatedTotalItems = 100;
-    // const threat_count = count ? data[0][threatcolumn].value:0;
-    // var threat1_count = 0;
-    // if (count != 1 && count != 0) {
-    //     threat1_count = data[1][threatcolumn].value
-    // }
-    // const threat_count_difference = count ? threat_count - threat1_count:0
-    // var percentage = 0
-    // if (count != 1 && count != 0) {
-    //     percentage = count ? ((threat_count_difference / threat1_count) * estimatedTotalItems):0;
-    // }
-    // const arrowIcon = percentage > 0 ? '➚' : '➘';
-
-    // var color;
-    // if (percentage <= 0) {
-    //   color = 'green';
-    // }
-    // else {
-    //   color = 'red';
-    // }
-
-    // Display the count and percentage value in the container
-    // this.container.innerHTML = `
-    //   <div style="display: flex; align-items: center;">
-    //     <div style="font-size: 60px; font-family: Arial, Helvetica, sans-serif;">1</div>
-    //     <div style="display: flex; flex-direction: column; align-items: flex-start;">
-    //       <div style="font-size: 30px; font-family: Arial, Helvetica, sans-serif;">2</div>
-    //       <div style="font-size: 20px; text-align: right; font-family: Arial, Helvetica, sans-serif;">3</div>
-    //     </div>
-    //   </div>
-    // `;
-
-    // Display the text line below the count value
-    // this.textContainer.textContent = "Today vs Yesterday";
-    // this.textContainer.style.fontSize = "12px";
-    // this.textContainer.style.fontFamily = "Arial, Helvetica, sans-serif";
 
     // Extract data from Looker's query response
-    // var labels = [];
-    var labels = ["Label 1", "Label 2", "Label 3"]
-    var datasets = [30, 40, 30];
 
-    // var xField = queryResponse.fields.dimension_like[0].name;
-    // var yField = queryResponse.fields.measure_like[0].name;
+    var DATA_COUNT = 10;
+    var labels = [];
 
-    // Populate labels and datasets based on your data model
-    // data.forEach(function(row) {
-    //   datasets.push(row[yField].value ? row[yField].value : 0);
-    //   labels.push(row[xField].value);
-    // });
+    Chart.helpers.srand(4);
+
+    for (var i = 0; i < DATA_COUNT; ++i) {
+      labels.push('' + i);
+    }
 
     // Initialize a Chart.js instance
       var ctx = this.chart_container;
@@ -113,18 +50,97 @@ looker.plugins.visualizations.add({
         data: {
           labels: labels,
           datasets: [{
-            data: datasets,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
-          }],
+            // backgroundColor: '#F13E18',
+            // data: 11,
+            backgroundColor: Chart.helpers.colors({
+              color: Chart.helpers.color(0),
+              count: DATA_COUNT
+            }),
+            data: Chart.helpers.numbers({
+              count: DATA_COUNT,
+              min: 0,
+              max: 100
+            }),
+            datalabels: {
+              anchor: 'end'
+            }
+          }, {
+            // backgroundColor: '#F1CD18',
+            // data: 31,
+            backgroundColor: Chart.helpers.colors({
+              color: Chart.helpers.color(1),
+              count: DATA_COUNT
+            }),
+            data: Chart.helpers.numbers({
+              count: DATA_COUNT,
+              min: 0,
+              max: 100
+            }),
+            datalabels: {
+              anchor: 'center',
+              backgroundColor: null,
+              borderWidth: 0
+            }
+          }, {
+            // backgroundColor: '#1FF118',
+            // data: 41,
+            backgroundColor: Chart.helpers.colors({
+              color: Chart.helpers.color(2),
+              count: DATA_COUNT
+            }),
+            data: Chart.helpers.numbers({
+              count: DATA_COUNT,
+              min: 0,
+              max: 100
+            }),
+            datalabels: {
+              anchor: 'start'
+            }
+          }]
         },
         options: {
-          cutoutPercentage: 50, // Adjust as needed
-          responsive: true,
-          maintainAspectRatio: false, // Adjust as needed
-        },
+          plugins: {
+            datalabels: {
+              backgroundColor: function(context) {
+                return context.dataset.backgroundColor;
+              },
+              borderColor: 'white',
+              borderRadius: 25,
+              borderWidth: 2,
+              color: 'white',
+              display: function(context) {
+                var dataset = context.dataset;
+                var count = dataset.data.length;
+                var value = dataset.data[context.dataIndex];
+                return value > count * 1.5;
+              },
+              font: {
+                weight: 'bold'
+              },
+              padding: 6,
+              formatter: Math.round
+            }
+          },
+
+          // Core options
+          aspectRatio: 4 / 3,
+          cutoutPercentage: 32,
+          layout: {
+            padding: 32
+          },
+          elements: {
+            line: {
+              fill: false
+            },
+            point: {
+              hoverRadius: 7,
+              radius: 5
+            }
+          },
+        }
       });
 
-    this.chart.canvas.style.height = '250px';
+    this.chart.canvas.style.height = '200px';
     this.chart.canvas.style.width = '200px';
     // Update the chart
     this.chart.update();
