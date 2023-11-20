@@ -21,3 +21,9 @@ visualization: {
     "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/helpers.min.js",
   ]
 }
+
+visualization: {
+  id: "table_viz"
+  label: "table_viz"
+  file: "custom_viz/table.js"
+}
