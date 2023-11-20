@@ -34,10 +34,18 @@ looker.plugins.visualizations.add({
     var DATA_COUNT = 10;
     var labels = [];
 
-    Chart.helpers.srand(4);
+    // Chart.helpers.srand(4);
 
     for (var i = 0; i < DATA_COUNT; ++i) {
       labels.push('' + i);
+    }
+      
+     function generateRandomNumbers(count, min, max) {
+      var numbers = [];
+      for (var i = 0; i < count; ++i) {
+        numbers.push(Math.floor(Math.random() * (max - min + 1)) + min);
+      }
+      return numbers;
     }
 
     // Initialize a Chart.js instance
@@ -50,49 +58,25 @@ looker.plugins.visualizations.add({
         data: {
           labels: labels,
           datasets: [{
-            // backgroundColor: '#F13E18',
-            // data: 11,
-            backgroundColor: Chart.helpers.colors({
-              color: Chart.helpers.color(0),
-              count: DATA_COUNT
-            }),
-            data: Chart.helpers.numbers({
-              count: DATA_COUNT,
-              min: 0,
-              max: 100
-            }),
+            backgroundColor: ["#F13E18", "#F1CD18", "#1FF118", "#FF5733", "#33FF57", "#5733FF", "#FF3366", "#33FFB5", "#B533FF", "#FFB533"],
+            data: generateRandomNumbers(DATA_COUNT, 0, 100),
             datalabels: {
               anchor: 'end'
             }
           }, {
-            // backgroundColor: '#F1CD18',
-            // data: 31,
-            backgroundColor: Chart.helpers.colors({
+            backgroundColor: Chart.helpers.color({
               color: Chart.helpers.color(1),
               count: DATA_COUNT
             }),
-            data: Chart.helpers.numbers({
-              count: DATA_COUNT,
-              min: 0,
-              max: 100
-            }),
+            data: generateRandomNumbers(DATA_COUNT, 0, 100),
             datalabels: {
               anchor: 'center',
               backgroundColor: null,
               borderWidth: 0
             }
           }, {
-            // backgroundColor: '#1FF118',
-            // data: 41,
-            backgroundColor: Chart.helpers.colors({
-              color: Chart.helpers.color(2),
-              count: DATA_COUNT
-            }),
-            data: Chart.helpers.numbers({
-              count: DATA_COUNT,
-              min: 0,
-              max: 100
-            }),
+            backgroundColor: ["#F1CD18", "#FF5733", "#F13E18", "#33FF57", "#1FF118", "#5733FF", "#FF3366", "#FFB533", "#33FFB5", "#B533FF"],
+            data: generateRandomNumbers(DATA_COUNT, 0, 100),
             datalabels: {
               anchor: 'start'
             }
@@ -140,7 +124,7 @@ looker.plugins.visualizations.add({
         }
       });
 
-    this.chart.canvas.style.height = '200px';
+    this.chart.canvas.style.height = '300px';
     this.chart.canvas.style.width = '200px';
     // Update the chart
     this.chart.update();
