@@ -39,7 +39,7 @@ looker.plugins.visualizations.add({
           var row = this.table.insertRow(i + 1);
           var cell1 = row.insertCell(0);
           var cell2 = row.insertCell(1);
-          var cell3 = row.insertCell(2);
+          // var cell3 = row.insertCell(2);
 
           // Use the correct field names based on your LookML model
           cell1.textContent = data[i][col1].value;
@@ -48,10 +48,16 @@ looker.plugins.visualizations.add({
           // Add a link or button for each row
           var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/dashboards/8'; // Replace with your actual dashboard URL
           var link = document.createElement('a');
-          link.textContent = 'View Dashboard';
+          // link.textContent = 'View Dashboard';
           link.href = `${dashboardUrl}?Product+Name=${encodeURIComponent(data[i][col1].value)}`;
           link.target = '_blank'; // Open in a new tab/window
-          cell3.appendChild(link);
+          // cell3.appendChild(link);
+
+          // Add a click event to the row to handle the link click
+          row.style.cursor = 'pointer';
+          row.onclick = function() {
+            window.open(link.href, '_blank');
+          };
       }
 
       // Signal the completion of rendering
