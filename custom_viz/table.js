@@ -10,12 +10,6 @@ looker.plugins.visualizations.add({
       this.table = element.appendChild(document.createElement('table'));
       this.table.setAttribute('class', 'table');
 
-      // // Create table headers
-      // var headerRow = this.table.insertRow(0);
-      // headerRow.insertCell(0).textContent = 'Column 1';
-      // headerRow.insertCell(1).textContent = 'Column 2';
-      // Add more header cells as needed
-
       // Applying styling to the table
       this.table.style.width = '100%';
       this.table.style.borderCollapse = 'collapse';
@@ -56,7 +50,7 @@ looker.plugins.visualizations.add({
           var link = document.createElement('a');
           link.textContent = 'View Dashboard';
           link.href = dashboardUrl;
-          link.target = '_blank'; // Open in a new tab/window
+          link.target = '_self'; // Open in a new tab/window
           cell3.appendChild(link);
       }
 
