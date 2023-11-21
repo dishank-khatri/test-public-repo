@@ -46,11 +46,11 @@ looker.plugins.visualizations.add({
           cell2.textContent = data[i][col2].value;
           // Customize cell content or styling as needed
           // Add a link or button for each row
-          var dashboardUrl = 'https://your-dashboard-url'; // Replace with your actual dashboard URL
+          var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/dashboards/8'; // Replace with your actual dashboard URL
           var link = document.createElement('a');
           link.textContent = 'View Dashboard';
-          link.href = dashboardUrl;
-          link.target = '_self'; // Open in a new tab/window
+          link.href = `${dashboardUrl}?param1=${encodeURIComponent(data[i][col1].value)}`;
+          link.target = '_blank'; // Open in a new tab/window
           cell3.appendChild(link);
       }
 
