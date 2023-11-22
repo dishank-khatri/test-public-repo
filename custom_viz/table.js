@@ -52,7 +52,7 @@ looker.plugins.visualizations.add({
            // Function to handle the click event
           function openDashboard(productName) {
               var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/dashboards/8'; // Replace with your actual dashboard URL
-              window.open(`${dashboardUrl}?Product+Name=${encodeURIComponent(productName)}`, '_blank');
+              # window.open(`${dashboardUrl}?Product+Name=${encodeURIComponent(productName)}`, '_blank');
           }
 
           // link.textContent = 'View Dashboard';
