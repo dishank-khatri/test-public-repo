@@ -53,7 +53,23 @@ looker.plugins.visualizations.add({
           function openDashboard(productName) {
               var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/dashboards/8'; // Replace with your actual dashboard URL
               // window.open(`${dashboardUrl}?Product+Name=${encodeURIComponent(productName)}`, '_blank');
-              window.parent.postMessage({ type: 'productName', name: "Monil" }, '*');
+              // console.log("Window Post Msg.");
+              // window.parent.postMessage({ type: 'productName', name: "Monil" }, '*');
+              try{
+                  // Child iframe script
+                window.addEventListener('message', function(event) {
+                  if (event.data.type === 'openDashboard') {
+                    // Redirect the iframe to the specified dashboard URL
+                    // window.location.href = event.data.url;
+
+                    // Send product name to the parent
+                    var productName = decodeURIComponent(event.data.url.split('=')[1]);
+                    window.parent.postMessage({ type: 'productName', name: productName }, '*');
+                  }
+                });
+              } catch(error){
+                  console.log(error);
+              }
           }
 
           // link.textContent = 'View Dashboard';
