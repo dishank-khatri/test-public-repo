@@ -46,8 +46,8 @@ looker.plugins.visualizations.add({
           cell2.textContent = data[i][col2].value;
           // Customize cell content or styling as needed
           // Add a link or button for each row
-          var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/dashboards/8'; // Replace with your actual dashboard URL
-          var link = document.createElement('a');
+          # var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/dashboards/8'; // Replace with your actual dashboard URL
+          # var link = document.createElement('a');
 
            // Function to handle the click event
           function openDashboard(productName) {
