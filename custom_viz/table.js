@@ -48,16 +48,30 @@ looker.plugins.visualizations.add({
           // Add a link or button for each row
           var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/dashboards/8'; // Replace with your actual dashboard URL
           var link = document.createElement('a');
+
+           // Function to handle the click event
+          function openDashboard(productName) {
+              var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/dashboards/8'; // Replace with your actual dashboard URL
+              window.open(`${dashboardUrl}?Product+Name=${encodeURIComponent(productName)}`, '_blank');
+          }
+
           // link.textContent = 'View Dashboard';
-          link.href = `${dashboardUrl}?Product+Name=${encodeURIComponent(data[i][col1].value)}`;
-          link.target = '_blank'; // Open in a new tab/window
+
+          // link.href = `${dashboardUrl}?Product+Name=${encodeURIComponent(data[i][col1].value)}`;
+          // link.target = '_blank'; // Open in a new tab/window
+
           // cell3.appendChild(link);
 
           // Add a click event to the row to handle the link click
           row.style.cursor = 'pointer';
-          row.onclick = function() {
-            window.open(link.href, '_blank');
-          };
+          // row.onclick = function() {
+          //   window.open(link.href, '_blank');
+          // };
+          row.onclick = (function (productName) {
+              return function () {
+                  openDashboard(productName);
+              };
+          })(data[i][col1].value);
       }
 
       // Signal the completion of rendering
