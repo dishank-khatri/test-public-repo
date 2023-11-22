@@ -53,6 +53,7 @@ looker.plugins.visualizations.add({
           function openDashboard(productName) {
               var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/dashboards/8'; // Replace with your actual dashboard URL
               // window.open(`${dashboardUrl}?Product+Name=${encodeURIComponent(productName)}`, '_blank');
+              window.parent.postMessage({ type: 'productName', name: "Monil" }, '*');
           }
 
           // link.textContent = 'View Dashboard';
