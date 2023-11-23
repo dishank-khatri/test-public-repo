@@ -58,18 +58,10 @@ looker.plugins.visualizations.add({
               try{
                   console.log('Inside try');
                   // Child iframe script
-                // window.addEventListener('message', function(event) {
-                  // if (event.data.type === 'openDashboard') {
-                    // Redirect the iframe to the specified dashboard URL
-                    // window.location.href = event.data.url;
-
-                    // Send product name to the parent
-                    // var productName = decodeURIComponent(event.data.url.split('=')[1]);
                     console.log(productName);
-                    window.parent.postMessage({ type: 'productName', name: productName }, '*');
-                      // window.parent.postMessage("Hello !!", 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app');
+                    const dataTosend = { type: 'productName', data: {name: productName, dashboardUrl: dashboardUrl},};
+                    window.parent.parent.postMessage(dataTosend, '*');
                   // }
-                // });
               } catch(error){
                   console.log(error);
               }
