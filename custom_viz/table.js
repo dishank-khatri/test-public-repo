@@ -51,7 +51,7 @@ looker.plugins.visualizations.add({
 
            // Function to handle the click event
           function openDashboard(productName) {
-              var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/embed/dashboards/8'; // Replace with your actual dashboard URL
+              var dashboardUrl = "https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/embed/dashboards/8"; // Replace with your actual dashboard URL
               // window.open(`${dashboardUrl}?Product+Name=${encodeURIComponent(productName)}`, '_blank');
               console.log("Window Post Msg.");
               // window.parent.postMessage({ type: 'productName', name: "Monil" }, '*');
@@ -59,7 +59,7 @@ looker.plugins.visualizations.add({
                   console.log('Inside try');
                   // Child iframe script
                     console.log(productName);
-                    const dataTosend = { type: 'productName', data: {name: productName, dashboardUrl: dashboardUrl},};
+                    const dataTosend = { type: 'productName', data: {name: productName, dashboardUrl: `${dashboardUrl}?Product+Name=${encodeURIComponent(productName)}`},};
                     window.parent.parent.postMessage(dataTosend, '*');
                   // }
               } catch(error){
