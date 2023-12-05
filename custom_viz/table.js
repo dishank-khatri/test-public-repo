@@ -26,7 +26,7 @@ looker.plugins.visualizations.add({
       headerRow.insertCell(0).textContent = 'Product Name';
       headerRow.insertCell(1).textContent = 'Product Buy Price';
       headerRow.insertCell(2).textContent = 'Progress Bar';
-       headerRow.insertCell(3).textContent = 'Sparkline';
+      headerRow.insertCell(3).textContent = 'Sparkline';
 
       // Clear existing rows
       while (this.table.rows.length > 1) {
@@ -47,11 +47,8 @@ looker.plugins.visualizations.add({
           // Use the correct field names based on your LookML model
           cell1.textContent = data[i][col1].value;
           cell2.textContent = data[i][col2].value;
-          // Customize cell content or styling as needed
-          // Add a link or button for each row
-          // var dashboardUrl = 'https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/dashboards/8'; // Replace with your actual dashboard URL
-          // var link = document.createElement('a');
-           // Add a progress bar to the third column
+
+          // Add a progress bar to the third column
           var progressBar = document.createElement('progress');
           progressBar.max = 100; // Set the maximum value for the progress bar
           progressBar.value = Math.random() * 100; // Set a random value for demonstration purposes
@@ -134,7 +131,7 @@ looker.plugins.visualizations.add({
 
            // Function to handle the click event
           function openDashboard(productName) {
-              var dashboardUrl = "https://4e8cbc7f-de3f-4e85-b308-1d06a77bfb07.looker.app/embed/dashboards/8"; // Replace with your actual dashboard URL
+              var dashboardUrl = "https://af275b30-12c8-4614-a455-57e58e0c8ecd.looker.app/embed/dashboards/6"; // Replace with your actual dashboard URL
               // window.open(`${dashboardUrl}?Product+Name=${encodeURIComponent(productName)}`, '_blank');
               try{
                     console.log(productName);
@@ -144,13 +141,6 @@ looker.plugins.visualizations.add({
                   console.log(error);
               }
           }
-
-          // link.textContent = 'View Dashboard';
-
-          // link.href = `${dashboardUrl}?Product+Name=${encodeURIComponent(data[i][col1].value)}`;
-          // link.target = '_blank'; // Open in a new tab/window
-
-          // cell3.appendChild(link);
 
           // Add a click event to the row to handle the link click
           row.style.cursor = 'pointer';
