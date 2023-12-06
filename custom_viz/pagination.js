@@ -25,10 +25,10 @@ looker.plugins.visualizations.add({
       // Initialize page number
       this.currentPage = 1;
 
-      this.rowsPerPage = 10;
+      this.rowsPerPage = 5;
     },
 
-    paginate : function(){
+    paginate : function(queryResponse, data){
       // Extract data from Looker's query response
       var col1 = queryResponse.fields.dimension_like[0].name;
       var col2 = queryResponse.fields.dimension_like[1].name;
@@ -54,13 +54,13 @@ looker.plugins.visualizations.add({
     },
 
     updateAsync: function(data, element, config, queryResponse, details, done) {
-
-      this.paginate()
+      this.pageNumbersContainer.innerHTML = '';
+      this.paginate(queryResponse, data)
 
       // Add page numbers
       var totalPages = Math.ceil(data.length / this.rowsPerPage);
       for (let page = 1; page <= totalPages; ++page) {
-      var pageNumberElement = document.createElement('span');
+        var pageNumberElement = document.createElement('span');
 
         pageNumberElement.textContent = page;
         pageNumberElement.style.marginRight = '5px';
@@ -69,7 +69,7 @@ looker.plugins.visualizations.add({
         pageNumberElement.onclick =  (evt) => {
           this.currentPage = evt.target.id;
           console.log('Clicked on page number: ', this.currentPage);
-          this.paginate();
+          this.paginate(queryResponse, data);
         };
         this.pageNumbersContainer.appendChild(pageNumberElement);
       }
