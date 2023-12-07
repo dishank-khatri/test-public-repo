@@ -20,7 +20,7 @@ looker.plugins.visualizations.add({
 
       var headerRow = this.table.insertRow(0);
       headerRow.insertCell(0).textContent = 'Order Number';
-      headerRow.insertCell(1).textContent = 'Order Status';
+      headerRow.insertCell(1).textContent = 'Order Date';
 
       // Initialize page number
       this.currentPage = 1;
