@@ -28,7 +28,7 @@ looker.plugins.visualizations.add({
       this.rowsPerPage = 5;
     },
 
-    paginate : function(desiredPage, queryResponse, data){
+    paginate : function(queryResponse, data, desiredPage){
       console.log("Desired Page: ", desiredPage)
       if(desiredPage)
         this.currentPage = desiredPage;
@@ -75,7 +75,7 @@ looker.plugins.visualizations.add({
             btn.disabled=false;
             btn1.disabled=false;
           }
-          this.paginate(parseInt(this.currentPage)-1,queryResponse, data);
+          this.paginate(queryResponse, data, parseInt(this.currentPage)-1);
       };
       this.pageNumbersContainer.appendChild(btn);
 
@@ -105,7 +105,7 @@ looker.plugins.visualizations.add({
               btn1.disabled=true;
           }
           console.log('Clicked on page number: ', this.currentPage);
-          this.paginate(queryResponse, data, queryResponse, data);
+          this.paginate(queryResponse, data);
         };
         this.pageNumbersContainer.appendChild(pageNumberElement);
       }
@@ -122,7 +122,7 @@ looker.plugins.visualizations.add({
           btn1.disabled=false;
           btn.disabled=false;
         }
-          this.paginate(parseInt(this.currentPage) +1, queryResponse, data);
+          this.paginate(queryResponse, data, parseInt(this.currentPage) +1);
         }
       this.pageNumbersContainer.appendChild(btn1);
       // Signal the completion of rendering
