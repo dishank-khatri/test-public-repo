@@ -66,6 +66,11 @@ looker.plugins.visualizations.add({
       btn.style.marginRight = '5px';
       btn.disabled = true;
       btn.onclick =  () => {
+          // Remove styles from all page buttons
+          document.querySelectorAll('button').forEach(el => {
+            el.style.backgroundColor = '#ffffff';
+            el.style.color = '#000000';
+          });
           console.log("Current page",this.currentPage);
           // When clicked on prev and page is 1
           if (parseInt(this.currentPage) === 2) {
@@ -75,6 +80,8 @@ looker.plugins.visualizations.add({
             btn.disabled=false;
             btn1.disabled=false;
           }
+          document.getElementById(parseInt(this.currentPage)-1).style.backgroundColor = '#ffcccb';
+          document.getElementById(parseInt(this.currentPage)-1).style.color = '#000000';
           this.paginate(queryResponse, data, parseInt(this.currentPage)-1);
       };
       this.pageNumbersContainer.appendChild(btn);
@@ -82,13 +89,24 @@ looker.plugins.visualizations.add({
       // Add page numbers
       var totalPages = Math.ceil(data.length / this.rowsPerPage);
       for (let page = 1; page <= totalPages; ++page) {
-        var pageNumberElement = document.createElement('span');
+        var pageNumberElement = document.createElement('button');
 
         pageNumberElement.textContent = page;
         pageNumberElement.style.marginRight = '5px';
         pageNumberElement.style.cursor = 'pointer';
         pageNumberElement.id = page;
+        pageNumberElement.style.backgroundColor = '#ffffff';
+        pageNumberElement.style.color = '#000000';
         pageNumberElement.onclick =  (evt) => {
+          // Remove styles from all page buttons
+          document.querySelectorAll('button').forEach(el => {
+            el.style.backgroundColor = '#ffffff';
+            el.style.color = '#000000';
+          });
+          // Apply styles to the clicked page number
+          evt.target.style.backgroundColor = '#ffcccb';
+          evt.target.style.color = '#000000';
+
           this.currentPage = evt.target.id;
           // 1st 2 conditions are when clicked on pg no's apart from 1st and last
           // last 2 conditions are opposite
@@ -109,19 +127,27 @@ looker.plugins.visualizations.add({
         };
         this.pageNumbersContainer.appendChild(pageNumberElement);
       }
-      const btn1 = document.createElement("button");
+
+      var btn1 = document.createElement("button");
       btn1.innerHTML = "Next";
       btn1.id = "next";
       btn1.onclick =  () => {
+          // Remove styles from all page buttons
+          document.querySelectorAll('button').forEach(el => {
+            el.style.backgroundColor = '#ffffff';
+            el.style.color = '#000000';
+          });
           console.log("Current page",this.currentPage);
           // When clicked on next and page is last
           if (parseInt(this.currentPage) === totalPages-1) {
               btn1.disabled=true;
           }
-        else{
-          btn1.disabled=false;
-          btn.disabled=false;
-        }
+          else{
+            btn1.disabled=false;
+            btn.disabled=false;
+          }
+          document.getElementById(parseInt(this.currentPage)+1).style.backgroundColor = '#ffcccb';
+          document.getElementById(parseInt(this.currentPage)+1).style.color = '#000000';
           this.paginate(queryResponse, data, parseInt(this.currentPage) +1);
         }
       this.pageNumbersContainer.appendChild(btn1);
