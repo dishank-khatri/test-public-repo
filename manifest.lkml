@@ -1,5 +1,8 @@
 project_name: "test_mysql"
 
+includes: 
+  - file: "custom_viz/page.css"
+
 # # Use local_dependency: To enable referencing of another project
 # # on this instance with include: statements
 #

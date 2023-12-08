@@ -28,7 +28,10 @@ looker.plugins.visualizations.add({
       this.rowsPerPage = 5;
     },
 
-    paginate : function(queryResponse, data){
+    paginate : function(desiredPage, queryResponse, data){
+      console.log("Desired Page: ", desiredPage)
+      if(desiredPage)
+        this.currentPage = desiredPage;
       // Extract data from Looker's query response
       var col1 = queryResponse.fields.dimension_like[0].name;
       var col2 = queryResponse.fields.dimension_like[1].name;
@@ -57,6 +60,25 @@ looker.plugins.visualizations.add({
       this.pageNumbersContainer.innerHTML = '';
       this.paginate(queryResponse, data)
 
+      var btn = document.createElement("button");
+      btn.innerHTML = "Prev";
+      btn.id = "prev";
+      btn.style.marginRight = '5px';
+      btn.disabled = true;
+      btn.onclick =  () => {
+          console.log("Current page",this.currentPage);
+          // When clicked on prev and page is 1
+          if (parseInt(this.currentPage) === 2) {
+              btn.disabled=true;
+          }
+          else {
+            btn.disabled=false;
+            btn1.disabled=false;
+          }
+          this.paginate(parseInt(this.currentPage)-1,queryResponse, data);
+      };
+      this.pageNumbersContainer.appendChild(btn);
+
       // Add page numbers
       var totalPages = Math.ceil(data.length / this.rowsPerPage);
       for (let page = 1; page <= totalPages; ++page) {
@@ -68,11 +90,41 @@ looker.plugins.visualizations.add({
         pageNumberElement.id = page;
         pageNumberElement.onclick =  (evt) => {
           this.currentPage = evt.target.id;
+          // 1st 2 conditions are when clicked on pg no's apart from 1st and last
+          // last 2 conditions are opposite
+          if (parseInt(this.currentPage) > 1) {
+            btn.disabled=false;
+          }
+          if (parseInt(this.currentPage) < totalPages) {
+              btn1.disabled=false;
+          }
+          if (parseInt(this.currentPage) === 1) {
+              btn.disabled=true;
+          }
+          if (parseInt(this.currentPage) === totalPages) {
+              btn1.disabled=true;
+          }
           console.log('Clicked on page number: ', this.currentPage);
-          this.paginate(queryResponse, data);
+          this.paginate(queryResponse, data, queryResponse, data);
         };
         this.pageNumbersContainer.appendChild(pageNumberElement);
       }
+      const btn1 = document.createElement("button");
+      btn1.innerHTML = "Next";
+      btn1.id = "next";
+      btn1.onclick =  () => {
+          console.log("Current page",this.currentPage);
+          // When clicked on next and page is last
+          if (parseInt(this.currentPage) === totalPages-1) {
+              btn1.disabled=true;
+          }
+        else{
+          btn1.disabled=false;
+          btn.disabled=false;
+        }
+          this.paginate(parseInt(this.currentPage) +1, queryResponse, data);
+        }
+      this.pageNumbersContainer.appendChild(btn1);
       // Signal the completion of rendering
       done();
     }
