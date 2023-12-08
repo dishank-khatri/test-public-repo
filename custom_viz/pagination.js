@@ -127,6 +127,9 @@ looker.plugins.visualizations.add({
         };
         this.pageNumbersContainer.appendChild(pageNumberElement);
       }
+      // Highlight 1st page initially.
+      document.getElementById(parseInt(this.currentPage)).style.backgroundColor = '#ffcccb';
+      document.getElementById(parseInt(this.currentPage)).style.color = '#000000';
 
       var btn1 = document.createElement("button");
       btn1.innerHTML = "Next";
