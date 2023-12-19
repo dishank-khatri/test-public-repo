@@ -27,3 +27,5 @@ explore: orders {}
 explore: payments {}
 # explore: productlines {}
 explore: products {}
+
+explore: sunburst{}
