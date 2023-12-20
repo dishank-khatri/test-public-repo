@@ -124,7 +124,7 @@ looker.plugins.visualizations.add({
               this.btn1.disabled=true;
           }
           console.log('Clicked on page number: ', this.currentPage);
-          this.paginate();
+          this.paginate(queryResponse, data);
           this.dynamic_page();
       };
       this.pageNumbersContainer.appendChild(pageNumberElement);
@@ -135,7 +135,7 @@ looker.plugins.visualizations.add({
       this.prevContainer.innerHTML = '';
       this.nextContainer.innerHTML = '';
       this.pageNumbersContainer.innerHTML = '';
-      
+
       var headerRow = this.table.insertRow(0);
       headerRow.insertCell(0).textContent = 'Order Number';
       headerRow.insertCell(1).textContent = 'Order Date';
