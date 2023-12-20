@@ -34,7 +34,7 @@ looker.plugins.visualizations.add({
       // Initialize page number
       this.currentPage = 1;
 
-      this.rowsPerPage = 5;
+      this.rowsPerPage = 4;
     },
 
     paginate : function(queryResponse, data, desiredPage){
@@ -132,7 +132,10 @@ looker.plugins.visualizations.add({
   },
 
     updateAsync: function(data, element, config, queryResponse, details, done) {
+      this.prevContainer.innerHTML = '';
+      this.nextContainer.innerHTML = '';
       this.pageNumbersContainer.innerHTML = '';
+      
       var headerRow = this.table.insertRow(0);
       headerRow.insertCell(0).textContent = 'Order Number';
       headerRow.insertCell(1).textContent = 'Order Date';
@@ -187,7 +190,7 @@ looker.plugins.visualizations.add({
           });
           console.log("Current page",this.currentPage);
           // When clicked on next and page is last
-          if (parseInt(this.currentPage) === totalPages-1) {
+          if (parseInt(this.currentPage) === this.totalPages-1) {
             this.btn1.disabled=true;
           }
           else{
