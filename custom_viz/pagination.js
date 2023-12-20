@@ -65,7 +65,7 @@ looker.plugins.visualizations.add({
       }
     },
 
-    dynamic_page: function(){
+    dynamic_page: function(queryResponse, data){
       // Store the current styles
       let buttonStyles = [];
       document.querySelectorAll('button').forEach(el => {
@@ -125,7 +125,7 @@ looker.plugins.visualizations.add({
           }
           console.log('Clicked on page number: ', this.currentPage);
           this.paginate(queryResponse, data);
-          this.dynamic_page();
+          this.dynamic_page(queryResponse, data);
       };
       this.pageNumbersContainer.appendChild(pageNumberElement);
     }
@@ -169,11 +169,11 @@ looker.plugins.visualizations.add({
           document.getElementById(parseInt(this.currentPage)-1).style.color = '#000000';
 
           this.paginate(queryResponse, data, parseInt(this.currentPage)-1);
-          this.dynamic_page();
+          this.dynamic_page(queryResponse, data);
       };
       this.prevContainer.appendChild(this.btn);
 
-      this.dynamic_page()
+      this.dynamic_page(queryResponse, data)
 
       // Highlight 1st page initially.
       document.getElementById(parseInt(this.currentPage)).style.backgroundColor = '#ffcccb';
@@ -201,7 +201,7 @@ looker.plugins.visualizations.add({
           document.getElementById(parseInt(this.currentPage)+1).style.color = '#000000';
 
           this.paginate(queryResponse, data, parseInt(this.currentPage) +1);
-          this.dynamic_page();
+          this.dynamic_page(queryResponse, data);
       }
       this.nextContainer.appendChild(this.btn1);
       // Signal the completion of rendering
