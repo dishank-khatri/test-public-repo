@@ -4,18 +4,46 @@ looker.plugins.visualizations.add({
     options: {
       // Any options you want to expose to Looker users
     },
-  
-	create: function(element, config){
+
+  create: function(element, config){
       this.ele = element.appendChild(document.createElement('div'))
-	},
+  },
 
-	updateAsync: function(data, element, config, queryResponse, details, done){
-
-        // var nodeData = 
+  updateAsync: function(data, element, config, queryResponse, details, done){
+    data=[
+        {
+        "name": "root",
+        "children": [{
+          "name": "Bu1",
+          "children": [{"name": "Prj1", "size": 2},
+                 {"name": "Prj2", "size": 1}
+                ]
+          },
+          {
+          "name": "Bu2",
+          "children": [{"name": "Prj1", "size": 2},
+                 {"name": "Prj2", "size": 1}
+                ]
+          },
+          {
+          "name": "Bu3",
+          "children": [{"name": "Prj1", "size": 2},
+                 {"name": "Prj2", "size": 1}
+                ]
+          },
+          {
+          "name": "Bu4",
+          "children": [{"name": "Prj1", "size": 2},
+                 {"name": "Prj2", "size": 1}
+                ]
+          }]
+      }
+    ];
+    console.log("Data", data);
         var width = 500;
         var height = 500;
         var radius = Math.min(width,height)/2;
-        var color = d3.scaleOrdinal(d3.schemeCategory20b); 
+        var color = d3.scaleOrdinal(d3.schemeCategory20b);
 
         var canvas = d3.select(this.ele).append('svg')
               .attr('width', width)
@@ -28,7 +56,7 @@ looker.plugins.visualizations.add({
 
       var root = d3.hierarchy(data)
         .sum(function (d) {
-           return d.size 
+           return d.size
         });
 
       partition(root)
@@ -67,10 +95,10 @@ looker.plugins.visualizations.add({
 
       function computeTextRotation(d) {
         var angle = (d.x0 + d.x1) / Math.PI * 90;  // <-- 1
-  
+
         // Avoid upside-down labels
         return (angle < 90 || angle > 270) ? angle : angle + 180;  // <--2 "labels aligned with slices"
-  
+
         // Alternate label formatting
         //return (angle < 180) ? angle - 90 : angle + 90;  // <-- 3 "labels as spokes"
     }
@@ -83,7 +111,6 @@ looker.plugins.visualizations.add({
         .attr("dy", ".5em")  // <-- 5
         .text(function(d) { return d.parent ? d.data.name : "" });  // <-- 6
       */
-		done()
-	}
+    done()
+  }
 });
-
