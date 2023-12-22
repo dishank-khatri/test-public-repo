@@ -10,35 +10,78 @@ looker.plugins.visualizations.add({
   },
 
   updateAsync: function(data, element, config, queryResponse, details, done){
-    data=[
-        {
+    console.log(queryResponse);
+    this.ele.innerHTML = '';
+    /*data =
+    {
         "name": "root",
         "children": [{
           "name": "Bu1",
-          "children": [{"name": "Prj1", "size": 2},
-                 {"name": "Prj2", "size": 1}
+          "children": [{"name": "P1", "size": 2},
+                 {"name": "P2", "size": 1},
+                {"name": "P3", "size": 1}
                 ]
           },
           {
           "name": "Bu2",
-          "children": [{"name": "Prj1", "size": 2},
-                 {"name": "Prj2", "size": 1}
+          "children": [{"name": "P1", "size": 2},
+                 {"name": "P2", "size": 1}
                 ]
           },
           {
           "name": "Bu3",
-          "children": [{"name": "Prj1", "size": 2},
-                 {"name": "Prj2", "size": 1}
+          "children": [{"name": "P1", "size": 2},
+                 {"name": "P2", "size": 1},
+                {"name": "P3", "size": 1}
                 ]
           },
           {
           "name": "Bu4",
-          "children": [{"name": "Prj1", "size": 2},
-                 {"name": "Prj2", "size": 1}
+          "children": [{"name": "P1", "size": 2},
+                 {"name": "P2", "size": 1}
                 ]
           }]
+    };*/
+    var output = {
+        "name":"Topic",
+        "children": []
+    }
+
+    var dynamicMapping = {};
+
+    data.forEach(function (entry) {
+      var bu = entry[queryResponse.fields.dimension_like[0].name]].value;
+      var project = entry[queryResponse.fields.dimension_like[1].name].value || "";
+
+      if (!dynamicMapping[bu]) {
+        dynamicMapping[bu] = {};
       }
-    ];
+
+      if (!dynamicMapping[bu][project]) {
+        dynamicMapping[bu][project] = 0;
+      }
+
+      dynamicMapping[bu][project] += 1;
+    });
+    // Convert the dynamic mapping to the desired structure
+    for (var bu in dynamicMapping) {
+      var buChildren = {
+        name: bu,
+        children: []
+      };
+
+      for (var project in dynamicMapping[bu]) {
+        buChildren.children.push({
+          name: project,
+          size: dynamicMapping[bu][project]
+        });
+      }
+
+      output.children.push(buChildren);
+    }
+
+    data = output;
+
     console.log("Data", data);
         var width = 500;
         var height = 500;
@@ -102,7 +145,7 @@ looker.plugins.visualizations.add({
         // Alternate label formatting
         //return (angle < 180) ? angle - 90 : angle + 90;  // <-- 3 "labels as spokes"
     }
-    /*
+
       canvas.selectAll(".node")  // <-- 1
         .append("text")  // <-- 2
         .attr("transform", function(d) {
@@ -110,7 +153,7 @@ looker.plugins.visualizations.add({
         .attr("dx", "-20")  // <-- 4
         .attr("dy", ".5em")  // <-- 5
         .text(function(d) { return d.parent ? d.data.name : "" });  // <-- 6
-      */
+
     done()
   }
 });
