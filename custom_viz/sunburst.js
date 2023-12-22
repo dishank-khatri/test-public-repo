@@ -50,7 +50,7 @@ looker.plugins.visualizations.add({
     var dynamicMapping = {};
 
     data.forEach(function (entry) {
-      var bu = entry[queryResponse.fields.dimension_like[0].name]].value;
+      var bu = entry[queryResponse.fields.dimension_like[0].name].value;
       var project = entry[queryResponse.fields.dimension_like[1].name].value || "";
 
       if (!dynamicMapping[bu]) {
