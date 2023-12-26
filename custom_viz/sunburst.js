@@ -71,10 +71,16 @@ looker.plugins.visualizations.add({
       };
 
       for (var project in dynamicMapping[bu]) {
-        buChildren.children.push({
-          name: project,
-          size: dynamicMapping[bu][project]
-        });
+        if (project == "NULL"){
+          delete buChildren.children
+          buChildren['size']=1
+      }
+      else{
+          buChildren.children.push({
+            name: project,
+            size: dynamicMapping[bu][project]
+          });
+      }
       }
 
       output.children.push(buChildren);
