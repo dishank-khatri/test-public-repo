@@ -12,36 +12,7 @@ looker.plugins.visualizations.add({
   updateAsync: function(data, element, config, queryResponse, details, done){
     console.log(queryResponse);
     this.ele.innerHTML = '';
-    /*data =
-    {
-        "name": "root",
-        "children": [{
-          "name": "Bu1",
-          "children": [{"name": "P1", "size": 2},
-                 {"name": "P2", "size": 1},
-                {"name": "P3", "size": 1}
-                ]
-          },
-          {
-          "name": "Bu2",
-          "children": [{"name": "P1", "size": 2},
-                 {"name": "P2", "size": 1}
-                ]
-          },
-          {
-          "name": "Bu3",
-          "children": [{"name": "P1", "size": 2},
-                 {"name": "P2", "size": 1},
-                {"name": "P3", "size": 1}
-                ]
-          },
-          {
-          "name": "Bu4",
-          "children": [{"name": "P1", "size": 2},
-                 {"name": "P2", "size": 1}
-                ]
-          }]
-    };*/
+
     var output = {
         "name":"Topic",
         "children": []
@@ -50,43 +21,71 @@ looker.plugins.visualizations.add({
     var dynamicMapping = {};
 
     data.forEach(function (entry) {
-      var bu = entry[queryResponse.fields.dimension_like[0].name].value;
-      var project = entry[queryResponse.fields.dimension_like[1].name].value || "";
+      var bu = entry["jira_business_unit.business_unit"].value;
+      var project = entry["project.project_name"].value || "NULL";
+      var pmo = entry["project.pmo"].value || "NULL";
+      //   console.log(pmo);
 
       if (!dynamicMapping[bu]) {
-        dynamicMapping[bu] = {};
+        dynamicMapping[bu] = {
+          "name": bu,
+          "children": []
+        };
       }
-
-      if (!dynamicMapping[bu][project]) {
-        dynamicMapping[bu][project] = 0;
+      if (!dynamicMapping[bu].children[project]) {
+        dynamicMapping[bu].children[project] = {
+          "name": project,
+          "size": 0
+        };
       }
+     dynamicMapping[bu].children[project].size += 1;
 
-      dynamicMapping[bu][project] += 1;
-    });
-    // Convert the dynamic mapping to the desired structure
-    for (var bu in dynamicMapping) {
-      var buChildren = {
-        name: bu,
-        children: []
-      };
-
-      for (var project in dynamicMapping[bu]) {
-        if (project == "NULL"){
-          delete buChildren.children
-          buChildren['size']=1
-      }
-      else{
-          buChildren.children.push({
-            name: project,
-            size: dynamicMapping[bu][project]
+      if (pmo !== "NULL") {
+          dynamicMapping[bu].children[project].children = [];
+          delete dynamicMapping[bu].children[project].size;
+          dynamicMapping[bu].children[project].children.push({
+             "name": pmo,
+             "size": 1
           });
-      }
-      }
+        };
+    });
 
-      output.children.push(buChildren);
+    // Convert the dynamic mapping to the desired structure
+
+    var finalOutput = {
+      "name": output.name,
+      "children": []
+    };
+
+    for (var bu in dynamicMapping) {
+        var buChildren = {
+            name: bu,
+            children: []
+        };
+        var buEntry = dynamicMapping[bu];
+        console.log(buEntry)
+        var childKeys = Object.keys(buEntry.children);
+        console.log("Keys",childKeys)
+        var l=childKeys.length;
+        for (var i=0; i<l; i++){
+            if ((l == 1) && childKeys[i]=='NULL'){
+                delete buEntry.children
+                buChildren = {
+                    name: bu,
+                    size: 1
+                }
+            }
+            else if (childKeys[i]=='NULL'){
+                continue
+            }
+            else{
+                buChildren.children.push(buEntry.children[childKeys[i]]);
+            }
+        }
+        finalOutput.children.push(buChildren);
     }
 
-    data = output;
+    data = finalOutput;
 
     console.log("Data", data);
         var width = 500;
