@@ -41,14 +41,3 @@ visualization: {
   label: "pagination_viz"
   file: "custom_viz/pagination.js"
 }
-
-visualization: {
-  id: "sunburst_viz"
-  label: "sunburst_viz"
-  file: "custom_viz/sunburst.js"
-  dependencies: [
-    "https://code.jquery.com/jquery-2.2.4.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js",
-  ]
-}
