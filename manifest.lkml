@@ -41,3 +41,13 @@ visualization: {
   label: "pagination_viz"
   file: "custom_viz/pagination.js"
 }
+
+visualization: {
+  id: "jquery_table"
+  label: "jquery_table"
+  file: "custom_viz/jquery_pagination.js"
+  dependencies: [
+   "https://code.jquery.com/jquery-3.7.0.js",
+   "https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"
+  ]
+}
