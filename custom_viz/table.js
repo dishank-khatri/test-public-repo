@@ -131,7 +131,7 @@ looker.plugins.visualizations.add({
 
            // Function to handle the click event
           function openDashboard(productName) {
-              var dashboardUrl = "https://40f7f28e-b4d6-445a-963a-9529a73a3172.looker.app/embed/dashboards/8"; // Replace with your actual dashboard URL
+              var dashboardUrl = "https://crestdatabi.cloud.looker.com/dashboards/test_mysql::redirection_dashboard"; // Replace with your actual dashboard URL
               // window.open(`${dashboardUrl}?Product+Name=${encodeURIComponent(productName)}`, '_blank');
               try{
                     console.log(productName);
